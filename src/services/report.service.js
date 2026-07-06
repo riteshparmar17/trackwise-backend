@@ -167,9 +167,10 @@ const getDashboardReport = async (userId, fromDate, toDate) => {
     })
         .sort({ date: -1 })
         .limit(5)
-        .select('date purpose totalKM startKM endKM status');
+        .select('_id date purpose totalKM startKM endKM status');
 
     const formattedDrives = recentDrives.map(d => ({
+        _id: d._id,
         date: d.date,
         purpose: d.purpose,
         totalKM: d.totalKM,

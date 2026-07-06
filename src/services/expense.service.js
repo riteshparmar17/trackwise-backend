@@ -164,6 +164,10 @@ const getFilteredExpenses = async (userId, filters) => {
 
     const [items, total, summary] = await Promise.all([
         Expense.find(filter)
+            .collation({
+                locale: 'en',
+                strength: 2
+            })
             .sort(sortObj)
             .skip(skip)
             .limit(Number(limit)),

@@ -4,6 +4,8 @@ const authRoutes = require('./routes/auth.routes');
 const driveRoutes = require('./routes/drive.routes');
 const expenseRoutes = require('./routes/expense.routes');
 const reportRoutes = require('./routes/report.routes');
+const settingsRoutes = require('./routes/settings.routes');
+const lookupRoutes = require('./routes/lookup.routes');
 
 const app = express();
 
@@ -17,6 +19,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/drives', driveRoutes);
 app.use('/api/expenses', expenseRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/settings', settingsRoutes);
+app.use('/api/lookups', lookupRoutes);
+
 
 app.get('/api/health', (req, res) => {
     res.json({ success: true, message: 'Trackwise API is running!' });
