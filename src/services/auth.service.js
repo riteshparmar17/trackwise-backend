@@ -146,6 +146,21 @@ const resendVerification = async (email) => {
     return { message: 'Verification email sent successfully!' };
 };
 
+const changePassword = async (userId, currentPassword, newPassword) => {
+    const user = await User.findById(userId).select('+password');
+    if (!user) {
+        throw new Error('User not found');
+    }
+    console.log('capa:', currentPassword, ' ---  newPass:', newPassword);
+    const isMatch = user.comparePassword(currentPassword);
+    if (!isMatch) {
+        throw new error('Invalid current password');
+    }
+    user.password = newPassword;
+    await user.save();
+    return { message: 'Password updated successfully' };
+};
+
 module.exports = {
     register,
     verifyEmail,
@@ -153,5 +168,6 @@ module.exports = {
     refreshToken,
     forgotPassword,
     resetPassword,
-    resendVerification
+    resendVerification,
+    changePassword
 };
