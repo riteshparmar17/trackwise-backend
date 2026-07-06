@@ -151,7 +151,6 @@ const changePassword = async (userId, currentPassword, newPassword) => {
     if (!user) {
         throw new Error('User not found');
     }
-    console.log('capa:', currentPassword, ' ---  newPass:', newPassword);
     const isMatch = user.comparePassword(currentPassword);
     if (!isMatch) {
         throw new error('Invalid current password');

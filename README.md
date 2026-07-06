@@ -206,7 +206,7 @@ Business logic is centralized in services while controllers remain thin and focu
 
 ## Current Release
 
-### v1.2.0
+### v1.3.0
 
 Included Features:
 
@@ -221,3 +221,6 @@ Included Features:
 - Responsive Mobile Experience
 - Cloudinary Integration
 - SendGrid Integration
+- Settings Management
+- User-Scoped Lookup Lists
+- Default Lookup Data Seeding
