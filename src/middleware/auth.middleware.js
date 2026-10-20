@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const auth = (roles = []) => (req, res, next) => {
     const authHeader = req.headers.authorization;
-    if(!authHeader || !authHeader.startsWith('Bearer ')) {
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(401).json({ success: false, message: 'Access denied. No token provided.' });
     }
     try {
@@ -13,8 +13,11 @@ const auth = (roles = []) => (req, res, next) => {
         }
         req.user = decoded;
         next();
-    }catch (error) {
-        res.status(400).json({ success: false, message: 'Invalid or expired token.' });
+    } catch (error) {
+        if (error.name === 'TokenExpiredError' || error.name === 'JsonWebTokenError' || error.name === 'NotBeforeError') {
+            return res.status(401).json({ success: false, message: 'Invalid or expired token.' });
+        }
+        return res.status(500).json({ success: false, message: 'Authentication failed.' });
     }
 };
 

@@ -80,11 +80,15 @@ const login = async ({ email, password }) => {
 
 const refreshToken = async (refreshToken) => {
     const record = await Token.findOne({ token: refreshToken, type: 'refresh' });
-    if (!record) {
+    if (!record || record.expires <= new Date()) {
+        if (record) {
+            await record.deleteOne();
+        }
         throw new Error('Invalid or expired refresh token');
     }
     const user = await User.findById(record.userId);
     if (!user) {
+        await record.deleteOne();
         throw new Error('User not found');
     }
     const newAccessToken = generateJWT(user);
